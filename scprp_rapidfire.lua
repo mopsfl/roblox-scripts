@@ -18,6 +18,5 @@ for _, v in pairs(g) do
 end
 
 for _,v in pairs(t) do
-    warn()
     v.TBS = 0
 end
