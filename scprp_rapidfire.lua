@@ -1,22 +1,41 @@
 --[[
-SCP: Roleplay Rapidfire
-gives ur current wepaon rapidfire yes very col
-u gotta execute it after u died or respawn
-
-u can also just edit gunsettings module and change TBS to 0 and delete ur gun identifier (in ur weapon tool). then it will keep i think 
+SCP: Roleplay Rapidfire | 12/10/2022
 ]]
 
 local g = getgc(true)
 local t = {}
+local p = game:GetService("Players").LocalPlayer
 
-for _, v in pairs(g) do
-    if typeof(v) == "table" then
-        if rawget(v, "Ammo") and rawget(v, "CurrentAmmo") then
-            table.insert(t,v)
+local function editCurrentGuns()
+    for _, v in pairs(g) do
+        if typeof(v) == "table" then
+            if rawget(v, "Ammo") and rawget(v, "CurrentAmmo") then
+                table.insert(t,v)
+            end
         end
     end
+    
+    for _,v in pairs(t) do
+        v.TBS = 0
+    end
 end
+task.spawn(editCurrentGuns)
 
-for _,v in pairs(t) do
-    v.TBS = 0
-end
+p.Character:FindFirstChildOfClass("Humanoid"):UnequipTools()
+for _,v in pairs(p.Backpack:GetChildren()) do
+    if v:IsA("Tool") and v:FindFirstChild("identifier") then
+        v:FindFirstChild("identifier"):Destroy()
+    end
+end; for _, v in pairs(game:GetService("ReplicatedStorage").GunSettings:GetChildren()) do
+    if v:IsA("ModuleScript") then
+        local m = require(v)
+        if m.TBS then
+            m.TBS = 0
+        end
+    end
+end; p.Backpack.ChildAdded:Connect(function(v)
+    p.Character:FindFirstChildOfClass("Humanoid"):UnequipTools()
+    if v:IsA("Tool") and v:FindFirstChild("identifier") then
+        v:FindFirstChild("identifier"):Destroy()
+    end
+end)
