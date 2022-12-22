@@ -29,6 +29,7 @@ end; loadClientStuff()
 
 --func to reset guns so all gun mods will be applied correctly
 local function resetguns()
+    if not game_client.main_weapon.CurrentWeapons then return warn("no guns found") end
     local currentWeapons = {}
 	for _,weapon in pairs(game_client.main_weapon.CurrentWeapons) do
 		table.insert(currentWeapons, weapon)
@@ -37,7 +38,12 @@ local function resetguns()
 		if gunstatsbackup:FindFirstChild(v.Tool.Name) then
 			local module = require(gunstatsbackup:FindFirstChild(v.Tool.Name))
 			if module then
-				game_client:resetGuns()
+				if not game_client.main_weapon then
+    			    loadClientStuff()
+    	    	end
+        		pcall(function()
+        			game_client.main_weapon.Reset()
+        		end)
 			end
 		end
 	end
