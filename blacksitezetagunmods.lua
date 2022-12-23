@@ -1,6 +1,8 @@
 --[[
 Blacksite Zeta OP Gun Mods | 12/22/2022
 This will be patched soon (probably)
+
+update: rapidfire patched so i removed it
 ]]
 
 
@@ -112,11 +114,11 @@ modifyGunData("CamRecoilMax", Vector3.new(0,0,0), true)
 modifyGunData("AccuracyMin", Vector3.new(-0,-0,0), true)
 modifyGunData("AccuracyMax", Vector3.new(0,0,0), true)
 
---rapidfire
-modifyGunData("firedelay", 0.05)
+--rapidfire [patched]
+--[[modifyGunData("firedelay", 0.05)
 modifyGunData("FireDelay", 0.05, true)
 modifyGunData("FireMode", "Auto", true)
-modifyGunData("firemode", "Auto")
+modifyGunData("firemode", "Auto")]]
 
 --inf ammo
 modifyGunData("clipsize", 9999999999)
